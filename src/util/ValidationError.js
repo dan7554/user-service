@@ -1,14 +1,14 @@
-class UnknownServerError  {
+class ValidationError  {
     constructor(error) {
         this.error = error;
     }
 
     getMessage() {
         return  {
-            type: 'UnknownServerError',
+            type: 'ValidationError',
             message: this.error
         }
     }
 }
 
-module.exports = UnknownServerError; 
+module.exports = ValidationError; 

@@ -1,37 +1,45 @@
 import { validationResult } from 'express-validator/check';
 import { matchedData } from 'express-validator/filter';
-import { UnknownServerError } from '../util/UnknownServerError';
+import UserClient from '../client/UserClient';
+import UnknownServerError from '../util/UnknownServerError';
+import UpstreamError from '../util/UpstreamError';
+import ValidationError from '../util/ValidationError';
 
 class UserController {
     static async login(req, res) {
-
         const errors = validationResult(req);
+
         if (!errors.isEmpty()) {
           return res.status(422).json({ errors: errors.mapped() });
         }
-       
-        // matchedData returns only the subset of data validated by the middleware
-        const user = matchedData(req);
 
+        const user = matchedData(req);
         res.send(JSON.stringify(user))
     }
 
     static async register(req, res) {
         try {
             const errors = validationResult(req);
+
             if (!errors.isEmpty()) {
-              return res.status(422).json({ errors: errors.mapped() });
+                throw new ValidationError(errors.mapped());
             }
-           
-            // matchedData returns only the subset of data validated by the middleware
+
             const user = matchedData(req);
-                
+            const registerResponse = await UserClient.register(user);
 
-            res.send(JSON.stringify(user))
+            res.json(registerResponse);
+
         } catch (error) {
-            res.status(500).send( new UnknownServerError(error).getMessage() )
+            if ( error instanceof UpstreamError ) {
+                res.status(500).send(error.getMessage())
+            } else if ( error instanceof ValidationError ) {
+                res.status(422).send(error.getMessage())
+            } else  {
+                res.status(500).send(new UnknownServerError(error).getMessage())
+            }
         }
-
+       
     }
 }
 

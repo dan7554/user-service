@@ -1,14 +1,14 @@
-class UnknownServerError  {
+class UpstreamError  {
     constructor(error) {
         this.error = error;
     }
 
     getMessage() {
         return  {
-            type: 'UnknownServerError',
+            type: 'UpstreamError',
             message: this.error
         }
     }
 }
 
-module.exports = UnknownServerError; 
+module.exports = UpstreamError; 

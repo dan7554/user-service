@@ -4,7 +4,7 @@ module.exports =  {
         userLoopbackClient: {
             register: {
                 method: 'POST',
-                uri: 'localhost:3333/Users',
+                uri: 'http://localhost:3333/api/Users',
                 body: {
                     email: '', 
                     password: ''
@@ -13,22 +13,22 @@ module.exports =  {
             },
             login: {
                 method: 'POST',
-                uri: 'localhost:3333/Users/login',
+                uri: 'http://localhost:3333/api/Users/login',
                 body: {
                     email: '',
                     password: ''
                 },
-                json: true 
+                json: true
             },
             logout: {
                 method: 'POST',
-                uri: 'localhost:3333/Users/logout',
+                uri: 'http://localhost:3333/api/Users/logout',
                 body: {},
                 json: true 
             },
             resetPass: {
                 method: 'POST',
-                uri: 'localhost:3333/Users/reset-password',
+                uri: 'http://localhost:3333/api/Users/reset-password',
                 body: {},
                 json: true 
             }
