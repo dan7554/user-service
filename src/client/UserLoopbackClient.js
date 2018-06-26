@@ -5,7 +5,6 @@ import UpstreamError from '../util/UpstreamError';
 
 class UserLoopbackClient {
     static async register(user) {
-        console.log('register', user)
         try {
             return await rp({
                 ...config.default.userLoopbackClient.register,
@@ -17,8 +16,19 @@ class UserLoopbackClient {
         } catch (error) {
             throw new UpstreamError(error);
         }
-
-        
+    }
+    static async login(user) {
+        try {
+            return await rp({
+                ...config.default.userLoopbackClient.login,
+                body: {
+                    email: user.email,
+                    password: base64.decode(user.password)
+                }
+            })
+        } catch (error) {
+            throw new UpstreamError(error);
+        }
     }
 }
 
