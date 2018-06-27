@@ -4,6 +4,18 @@ import rp from 'request-promise';
 import UpstreamError from '../util/UpstreamError';
 
 class UserLoopbackClient {
+    static async logout(auth) {
+        try {
+            return await rp({
+                ...config.default.userLoopbackClient.logout,
+                headers: {
+                    Authorization: auth
+                }
+            })
+        } catch (error) {
+            throw new UpstreamError(error);
+        }
+    }
     static async register(user) {
         try {
             return await rp({

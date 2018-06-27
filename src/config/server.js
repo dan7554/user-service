@@ -24,13 +24,10 @@ module.exports =  {
                 method: 'POST',
                 uri: 'http://localhost:3333/api/Users/logout',
                 body: {},
-                json: true 
-            },
-            resetPass: {
-                method: 'POST',
-                uri: 'http://localhost:3333/api/Users/reset-password',
-                body: {},
-                json: true 
+                json: true,
+                headers: {
+                    Authorization: ''
+                }
             }
         }
     },
